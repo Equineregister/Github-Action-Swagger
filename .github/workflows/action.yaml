@@ -2,9 +2,6 @@ name: Deploy Swagger
 on:
   workflow_call:
     inputs:
-      awsRegion:
-        required: true
-        type: string
       projectName:
         required: true
         type: string
@@ -13,6 +10,8 @@ on:
         type: string
     secrets:
       swaggerBucket:
+        required: true
+      awsRegion:
         required: true
       awsAccessKeyId:
         required: true
@@ -30,7 +29,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.awsAccessKeyId }}
           aws-secret-access-key: ${{ secrets.awsSecretAccessKey }}
-          aws-region: ${{ inputs.awsRegion }}
+          aws-region: ${{ secrets.awsRegion }}
 
       - name: Check if Swagger Exists
         id: check_files
